@@ -1,0 +1,115 @@
+---
+title: "Lab 1 Mikołaj Fiedorczuk"
+output:
+  html_document:
+    df_print: paged
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code.
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*.
+
+```{r}
+plot(cars)
+
+```
+
+```{r}
+s<-sample(c("Orzeł","Reszka"),10,replace=T) 
+#symulacja 10 rzutów symetryczną monetą
+result <- which(s=="Reszka")
+print(length(result)) 
+```
+
+Prawdopodobieństwo pewnie wynosi 50% i jest to równe z wartością teoretyczną
+
+```{r}
+s<-sample(c("Orzeł","Reszka"),100,replace=T) 
+#symulacja 100 rzutów symetryczną monetą
+result <- which(s=="Reszka")
+print(length(result)) 
+```
+
+```{r}
+s<-sample(c("Orzeł","Reszka"),1000000,replace=T) 
+#symulacja 1000000 rzutów symetryczną monetą
+result <- which(s=="Reszka")
+print(length(result)) 
+```
+
+Z coraz wyższą ilością prób zwiększa sie dokładność i dązy do połowy ilosci rzutów
+
+*Zad 2*
+
+```{r}
+finalVector=c()
+size=100000 #liczba losowań w symulacji
+for(i in 1:size)
+{
+  s<-sample(c("Orzeł","Reszka"),3,replace=T)
+  result<-which(s=="Orzeł")
+  finalVector=c(finalVector, length(result))
+}
+result2<-which(finalVector==2)
+print(length(result2)/size) 
+```
+
+```{r}
+3/8
+#wynik teoretyczny
+```
+
+```{r}
+finalVector=c()
+size=100000 #liczba losowań w symulacji
+for(i in 1:size)
+{
+  s<-sample(c("Orzeł","Orzeł","Orzeł","Reszka"),3,replace=T)
+  result<-which(s=="Orzeł")
+  finalVector=c(finalVector, length(result))
+}
+result2<-which(finalVector==2)
+print(length(result2)/size) 
+```
+
+```{r}
+3/4 * 3/4 * 1/4 * 3
+#prawdopodobieństwo teoretyczne
+
+```
+
+Zad 3\
+
+```{result=TRUE}
+  s<-sample(c("Orzeł","Reszka"),1)
+  for(i in 2:size){
+    s1<-sample(c("Orzeł","Reszka"),1)
+    if(s==s1)
+      result=FALSE
+    s<-s1
+  }
+  c(result)
+
+
+#symulujemy prawdopodobieństwo dla 5 rzutów
+finalVector=c()
+size=5
+for(i in 1:100000)
+{
+  result<-f(size)
+  finalVector<-c(finalVector, result)
+}
+result2<-which(finalVector==FALSE)
+print(length(result2)/100000) #0.938 (15/16) wynik teorytyczny
+
+#i dla 20 rzutów
+finalVector=c()
+size=20
+for(i in 1:100000)
+{
+  result<-f(size)
+  finalVector<-c(finalVector, result)
+}
+result2<-which(finalVector==FALSE)
+print(length(result2)/100000) #wynik teorytyczny: 1-(1/2)^19 - Wartość bardzo zbliżona do 1. Symulacja nie jest tak dokładna żeby to wychwycić.
+```
